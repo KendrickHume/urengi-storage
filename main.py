@@ -59,17 +59,20 @@ def login():
             username = request.form["username"]
             password = request.form["password"]
             cursor = data.cursor()
-            cursor.execute("SELECT * FROM logincreds WHERE Username = %s AND Password = %s", (username, password))
+            cursor.execute("SELECT * FROM logincreds WHERE username = %s AND password = %s", (username, password))
             user = cursor.fetchone()
-            if user[3] == "inventory":
-                session["user"] = user
-                return redirect(url_for("inventoryhome"))
-            elif user[3] == "admin":
-                session["user"] = user
-                return redirect(url_for("admin"))
+            if user:
+                if user[3] == "inventory":
+                    session["user"] = user
+                    return redirect(url_for("inventoryhome"))
+                elif user[3] == "admin":
+                    session["user"] = user
+                    return redirect(url_for("admin"))
+                else:
+                    flash("Incorect Username or Password")
+                    return redirect(url_for("login"))
             else:
-                flash("Incorect Username or Password")
-                return redirect(url_for("login"))
+                flash("User doesn't not exsist")
     return render_template("login.html")
 
 # admin
@@ -93,7 +96,7 @@ def admin():
             if account:
                 flash("Account Exists")
             else:
-                cursor.execute("INSERT INTO logincreds (Username, Password, AccountFor) VALUES (%s, %s, %s)", (username, password, accountfor))
+                cursor.execute("INSERT INTO logincreds (username, password, accountfor) VALUES (%s, %s, %s)", (username, password, accountfor))
                 data.commit()
                 data.close()
                 flash("Account Created")
@@ -174,7 +177,7 @@ def updateitem(itemid):
         return redirect(url_for("login"))
     data = getdbpath()
     cursor = data.cursor()
-    cursor.execute("SELECT * FROM inventory WHERE itemid = ?", (itemid,))
+    cursor.execute("SELECT * FROM inventory WHERE itemid = %s", (itemid,))
     item = cursor.fetchone()
     if request.method == "POST":
         action = request.form["action"]
