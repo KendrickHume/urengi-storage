@@ -15,6 +15,7 @@ form {
     text-align: center;
 }
 table {
+    max-width: 500px;
     border: 1px solid black;
     border-collapse: collapse;
 }
