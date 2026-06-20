@@ -54,7 +54,7 @@ def home():
                 cursor.execute("SELECT * FROM inventory")
                 items = cursor.fetchall()
             else:
-                cursor.execute("SELECT * FROM inventory WHERE category = ?", (category,))
+                cursor.execute("SELECT * FROM inventory WHERE category = %s", (category,))
                 items = cursor.fetchall()
                 totalincategory = len(items)
         elif action == "update":
@@ -75,7 +75,7 @@ def additem():
             flash("all fields required")
             return redirect(url_for("additem"))
         else:
-            cursor.execute("INSERT INTO inventory (name, category, qty) VALUES(?, ?, ?)", (item, category, qty))
+            cursor.execute("INSERT INTO inventory (name, category, qty) VALUES(%s, %s, %s)", (item, category, qty))
             data.commit()
             data.close()
             flash("Item successfully added")
@@ -87,7 +87,7 @@ def additem():
 def updateitem(itemid):
     data = getdbpath()
     cursor = data.cursor()
-    cursor.execute("SELECT * FROM inventory WHERE itemid = ?", (itemid,))
+    cursor.execute("SELECT * FROM inventory WHERE itemid = %s", (itemid,))
     item = cursor.fetchone()
     if request.method == "POST":
         action = request.form["action"]
@@ -95,17 +95,17 @@ def updateitem(itemid):
             item = request.form["item"]
             category = request.form["category"]
             qty = request.form["qty"]
-            cursor.execute("UPDATE inventory SET name = ?, category = ?, qty = ? WHERE itemid = ?", (item, category, qty, itemid))
+            cursor.execute("UPDATE inventory SET name = %s, category = %s, qty = %s WHERE itemid = %s", (item, category, qty, itemid))
             data.commit()
             data.close()
             flash("Item id, " + itemid + ", successfully updated")
             return redirect(url_for("home"))
         elif action == "Delete":
             delitemid = request.form["delitemid"]
-            cursor.execute("SELECT * FROM inventory WHERE itemid = ?", (delitemid,))
+            cursor.execute("SELECT * FROM inventory WHERE itemid = %s", (delitemid,))
             exists = cursor.fetchone()
             if exists:
-                cursor.execute("DELETE FROM inventory WHERE itemid = ?", (delitemid,))
+                cursor.execute("DELETE FROM inventory WHERE itemid = %s", (delitemid,))
                 data.commit()
                 data.close()
                 flash("Item id, " + delitemid + " deletion success")
