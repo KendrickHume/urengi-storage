@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Urengi Storage Manager-Update Item</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='UrengiStorageIcon.ico') }}" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1 class="pagetitle">Update Item</h1>
+        <nav id="desktopnav">
+            <ul>
+                <li><a href="/exit" id="exit">logout</a></li>
+                <li><a href="/inventoryhome">Inventory</a></li>
+                <li><a href="/additem">Add Item</a></li>
+            </ul>
+        </nav>
+        <nav id="mobilenav">
+            <ul>
+                <li><a href="/exit" id="exit">logout</a></li>
+                <li><a href="/inventoryhome">Inventory</a></li>
+                <li><a href="/additem">Add Item</a></li>
+            </ul>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p id="flashmsg">{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="#" method="POST" autocomplete="off">
+            <label for="nitemid">Item ID:</label>
+            <input type="number" name="nitemid" class="txtbx" value="{{vitemid}}"><br>
+            <label for="item">Item name</label>
+            <input type="text" name="item" class="txtbx" value="{{vitem}}"><br>
+            <label for="category">Category</label>
+            <select name="category" class="txtbx" value="{{vcategory}}">
+                <option value="Vegtables" {{ 'selected' if vcategory == 'Vegtables' else '' }}>Vegtables</option>
+                <option value="Fruits" {{ 'selected' if vcategory == 'Fruits' else '' }}>Fruits</option>
+                <option value="Cereals" {{ 'selected' if vcategory == 'Cereals' else '' }}>Cereals</option>
+                <option value="Flours" {{ 'selected' if vcategory == 'Flours' else '' }}>Flours</option>
+                <option value="Beans/Rice/Potatoes" {{ 'selected' if vcategory == 'Beans/Rice/Potatoes' else '' }}>Beans/Rice/Potatoes</option>
+                <option value="Meats" {{ 'selected' if vcategory == 'Meats' else '' }}>Meats</option>
+                <option value="Soups" {{ 'selected' if vcategory == 'Soups' else '' }}>Soups</option>
+                <option value="Drinks" {{ 'selected' if vcategory == 'Drinks' else '' }}>Drinks</option>
+                <option value="Deserts" {{ 'selected' if vcategory == 'Deserts' else '' }}>Deserts</option>
+                <option value="Seasonings" {{ 'selected' if vcategory == 'Seasonings' else '' }}>Seasonings</option>
+                <option value="Baking" {{ 'selected' if vcategory == 'Baking' else '' }}>Baking</option>
+                <option value="Condiments" {{ 'selected' if vcategory == 'Condiments' else '' }}>Condiments</option>
+                <option value="Household Products" {{ 'selected' if vcategory == 'Household Products' else '' }}>Household Products</option>
+                <option value="Sugars" {{ 'selected' if vcategory == 'Sugars' else '' }}>Sugars</option>
+                <option value="Pastas" {{ 'selected' if vcategory == 'Pastas' else '' }}>Pastas</option>
+                <option value="Homemade" {{ 'selected' if vcategory == 'Homemade' else '' }}>Homemade</option>
+            </select><br>
+            <label for="qty">Quantity</label>
+            <input type="number" name="qty" class="txtbx" value="{{vqty}}">
+            <input type="submit" class="submitbtn" value="Add stock" name="action">
+            <input type="submit" class="submitbtn" value="Take out" name="action">
+            <br>
+            <input type="submit" class="submitbtn" value="Update" name="action">
+            <center><h2>Delete</h2></center>
+            <label for="delitemid">Confirm Item ID:</label>
+            <input type="number" name="delitemid" class="txtbx"><br>
+            <input type="submit" class="submitbtn" value="Delete" name="action">
+        </form>
+    </body>
+</html>

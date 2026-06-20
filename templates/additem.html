@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Urengi Storage Manager-Add Item</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='UrengiStorageIcon.ico') }}" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1 class="pagetitle">Add Item</h1>
+        <nav id="desktopnav">
+            <ul>
+                <li><a href="/exit" id="exit">logout</a></li>
+                <li><a href="/inventoryhome">Inventory</a></li>
+                <li><a href="/additem" id="active">Add Item</a></li>
+            </ul>
+        </nav>
+        <nav id="mobilenav">
+            <ul>
+                <li><a href="/exit" id="exit">logout</a></li>
+                <li><a href="/inventoryhome">Inventory</a></li>
+                <li><a href="/additem" id="active">Add Item</a></li>
+            </ul>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p id="flashmsg">{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="#" method="POST" autocomplete="off">
+            <label for="item">Item name</label>
+            <input type="text" name="item" class="txtbx"><br>
+            <label for="category">Category</label>
+            <select name="category" class="txtbx">
+                <option value="" selected></option>
+                <option value="Vegtables">Vegtables</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Cereals">Cereals</option>
+                <option value="Flours">Flours</option>
+                <option value="Beans/Rice">Beans/Rice</option>
+                <option value="Meats">Meats</option>
+                <option value="Soups">Soups</option>
+                <option value="Drinks">Drinks</option>
+                <option value="Deserts">Deserts</option>
+                <option value="Seasonings">Seasonings</option>
+                <option value="Baking">Baking</option>
+                <option value="Condiments">Condiments</option>
+                <option value="Household Products">Household Products</option>
+                <option value="Sugars">Sugars</option>
+                <option value="Pastas">Pastas</option>
+                <option value="Homemade">Homemade</option>
+            </select><br>
+            <label for="qty">Quantity</label>
+            <input type="number" name="qty" class="txtbx"><br>
+            <input type="submit" class="submitbtn" value="Add Item">
+        </form>
+    </body>
+</html>

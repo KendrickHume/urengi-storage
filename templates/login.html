@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Urengi Storage Manager-Login</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='UrengiStorageIcon.ico') }}" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1 class="pagetitle">Login to Urengi</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p id="flashmsg">{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            <label for="username">Username:</label>
+            <input type="text" name="username" class="txtbx">
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" class="txtbx">
+            <br>
+            <button name="action" value="login" class="submitbtn">Login</button>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Urengi Storage Manager-Admin</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='UrengiStorageIcon.ico') }}" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1 class="pagetitle">Create Account</h1>
+        <nav id="desktopnav">
+            <ul>
+                <li><a href="/exit" id="exit">logout</a></li>
+            </ul>
+        </nav>
+        <nav id="mobilenav">
+            <ul>
+                <li><a href="/exit" id="exit">logout</a></li>
+            </ul>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p id="flashmsg">{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="post" autocomplete="off">
+            <label for="username">Username: </label>
+            <input type="text" name="username" class="txtbx">
+            <br>
+            <label for="password">Create a password:</label>
+            <input type="password" name="password" class="txtbx">
+            <br>
+            <label for="accountfor">What is the account for?</label>
+            <select class="txtbx" name="accountfor" id="txtbx">
+                <option value="inventory">Inventory</option>
+            </select>
+            <br>
+            <button name="action" value="addaccount" class="submitbtn">Add Account</button>
+            <br>
+            <h3>Delete Account</h3>
+            <label for="id">Enter account id:</label>
+            <input type="text" name="id" class="txtbx">
+            <br>
+            <button name="action" value="deleteaccount" class="submitbtn">Delete Account</button>
+        </form>
+        <table>
+            <thead>
+                <th>id</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Account For</th>
+            </thead>
+            <tbody>
+                {% for i in logins %}
+                    <tr>
+                        <td>{{ i[0] }}</td>
+                        <td>{{ i[1] }}</td>
+                        <td>{{ i[2] }}</td>
+                        <td>{{ i[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
