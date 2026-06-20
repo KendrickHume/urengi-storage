@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
-import socket, sqlite3, os
+import socket, sqlite3, os, psycopg2
 
 # Socket IPv4
 # hostname = socket.gethostname()
@@ -20,7 +20,8 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.path.join(BASEDIR, "data", "inventory.db")
 
 def getdbpath():
-    return sqlite3.connect(DATABASE)
+    dburl = os.environ("DATABASE_URL")
+    return psycopyg2.connect(dburl)
 
 # data = sqlite3.connect(DATABASE)
 # cursor = data.cursor()
@@ -58,7 +59,7 @@ def login():
             username = request.form["username"]
             password = request.form["password"]
             cursor = data.cursor()
-            cursor.execute("SELECT * FROM logincreds WHERE Username = ? AND Password = ?", (username, password))
+            cursor.execute("SELECT * FROM logincreds WHERE Username = %s AND Password = %s", (username, password))
             user = cursor.fetchone()
             if user[3] == "inventory":
                 session["user"] = user
@@ -87,22 +88,22 @@ def admin():
             username = request.form["username"]
             password = request.form["password"]
             accountfor = request.form["accountfor"]
-            cursor.execute("SELECT * FROM logincreds WHERE username = ? AND password = ?", (username, password))
+            cursor.execute("SELECT * FROM logincreds WHERE username = %s AND password = %s", (username, password))
             account = cursor.fetchone()
             if account:
                 flash("Account Exists")
             else:
-                cursor.execute("INSERT INTO logincreds (Username, Password, AccountFor) VALUES (?, ?, ?)", (username, password, accountfor))
+                cursor.execute("INSERT INTO logincreds (Username, Password, AccountFor) VALUES (%s, %s, %s)", (username, password, accountfor))
                 data.commit()
                 data.close()
                 flash("Account Created")
                 return redirect(url_for("admin"))
         elif action == "deleteaccount":
             id = request.form["id"]
-            cursor.execute("SELECT * FROM logincreds WHERE id = ?", (id,))
+            cursor.execute("SELECT * FROM logincreds WHERE id = %s", (id,))
             account = cursor.fetchone()
             if account:
-                cursor.execute("DELETE FROM logincreds WHERE id = ?", (id,))
+                cursor.execute("DELETE FROM logincreds WHERE id = %s", (id,))
                 data.commit()
                 data.close()
                 flash("Account Deleted")
@@ -133,7 +134,7 @@ def inventoryhome():
                 items = cursor.fetchall()
                 return redirect(url_for("inventoryhome"))
             else:
-                cursor.execute("SELECT * FROM inventory WHERE category = ?", (category,))
+                cursor.execute("SELECT * FROM inventory WHERE category = %s", (category,))
                 items = cursor.fetchall()
                 totalincategory = len(items)
                 return render_template("inventoryhome.html", items=items, totalincategory=totalincategory, category=category)
@@ -158,7 +159,7 @@ def additem():
             flash("all fields required")
             return redirect(url_for("additem"))
         else:
-            cursor.execute("INSERT INTO inventory (name, category, qty) VALUES(?, ?, ?)", (item, category, qty))
+            cursor.execute("INSERT INTO inventory (name, category, qty) VALUES(%s, %s, %s)", (item, category, qty))
             data.commit()
             data.close()
             flash("Item successfully added")
@@ -181,17 +182,17 @@ def updateitem(itemid):
             item = request.form["item"]
             category = request.form["category"]
             qty = request.form["qty"]
-            cursor.execute("UPDATE inventory SET name = ?, category = ?, qty = ? WHERE itemid = ?", (item, category, qty, itemid))
+            cursor.execute("UPDATE inventory SET name = %s, category = %s, qty = %s WHERE itemid = %s", (item, category, qty, itemid))
             data.commit()
             data.close()
             flash("Item id, " + itemid + ", successfully updated")
             return redirect(url_for("inventoryhome"))
         elif action == "Delete":
             delitemid = request.form["delitemid"]
-            cursor.execute("SELECT * FROM inventory WHERE itemid = ?", (delitemid,))
+            cursor.execute("SELECT * FROM inventory WHERE itemid = %s", (delitemid,))
             exists = cursor.fetchone()
             if exists:
-                cursor.execute("DELETE FROM inventory WHERE itemid = ?", (delitemid,))
+                cursor.execute("DELETE FROM inventory WHERE itemid = %s", (delitemid,))
                 data.commit()
                 data.close()
                 flash("Item id, " + delitemid + " deletion success")
