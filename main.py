@@ -21,7 +21,7 @@ DATABASE = os.path.join(BASEDIR, "data", "inventory.db")
 
 def getdbpath():
     dburl = os.environ.get("DATABASE_URL")
-    return psycopyg2.connect(dburl)
+    return psycopg2.connect(dburl)
 
 # data = sqlite3.connect(DATABASE)
 # cursor = data.cursor()
