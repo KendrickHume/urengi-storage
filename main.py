@@ -20,7 +20,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.path.join(BASEDIR, "data", "inventory.db")
 
 def getdbpath():
-    dburl = os.environ.get("https://xoywxzpckfvhijytkosv.supabase.co")
+    dburl = os.environ.get("DATABASE_URL")
     return psycopg2.connect(dburl)
 
 # data = sqlite3.connect(DATABASE)
