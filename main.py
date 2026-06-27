@@ -13,7 +13,7 @@ s.close()
 
 # Flask Setup
 app = Flask(__name__)
-app.secret_key = "**90##!!??"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 # Data setup
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
