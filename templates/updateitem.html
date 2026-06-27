@@ -35,23 +35,24 @@
             <label for="item">Item name</label>
             <input type="text" name="item" class="txtbx" value="{{vitem}}"><br>
             <label for="category">Category</label>
-            <select name="category" class="txtbx" value="{{vcategory}}">
-                <option value="Vegtables" {{ 'selected' if vcategory == 'Vegtables' else '' }}>Vegtables</option>
-                <option value="Fruits" {{ 'selected' if vcategory == 'Fruits' else '' }}>Fruits</option>
-                <option value="Cereals" {{ 'selected' if vcategory == 'Cereals' else '' }}>Cereals</option>
-                <option value="Flours" {{ 'selected' if vcategory == 'Flours' else '' }}>Flours</option>
-                <option value="Beans/Rice/Potatoes" {{ 'selected' if vcategory == 'Beans/Rice/Potatoes' else '' }}>Beans/Rice/Potatoes</option>
-                <option value="Meats" {{ 'selected' if vcategory == 'Meats' else '' }}>Meats</option>
-                <option value="Soups" {{ 'selected' if vcategory == 'Soups' else '' }}>Soups</option>
-                <option value="Drinks" {{ 'selected' if vcategory == 'Drinks' else '' }}>Drinks</option>
-                <option value="Deserts" {{ 'selected' if vcategory == 'Deserts' else '' }}>Deserts</option>
-                <option value="Seasonings" {{ 'selected' if vcategory == 'Seasonings' else '' }}>Seasonings</option>
-                <option value="Baking" {{ 'selected' if vcategory == 'Baking' else '' }}>Baking</option>
-                <option value="Condiments" {{ 'selected' if vcategory == 'Condiments' else '' }}>Condiments</option>
-                <option value="Household Products" {{ 'selected' if vcategory == 'Household Products' else '' }}>Household Products</option>
-                <option value="Sugars" {{ 'selected' if vcategory == 'Sugars' else '' }}>Sugars</option>
-                <option value="Pastas" {{ 'selected' if vcategory == 'Pastas' else '' }}>Pastas</option>
-                <option value="Homemade" {{ 'selected' if vcategory == 'Homemade' else '' }}>Homemade</option>
+            <select name="category" class="txtbx">
+                <option value="{{vcategory}}">Current: {{vcategory}}</option>
+                <option value="Vegtables">Vegtables</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Cereals">Cereals</option>
+                <option value="Flours">Flours</option>
+                <option value="Beans/Rice/Potatoes">Beans/Rice/Potatoes</option>
+                <option value="Meats">Meats</option>
+                <option value="Soups">Soups</option>
+                <option value="Drinks">Drinks</option>
+                <option value="Deserts">Deserts</option>
+                <option value="Seasonings">Seasonings</option>
+                <option value="Baking">Baking</option>
+                <option value="Condiments">Condiments</option>
+                <option value="Household Products">Household Products</option>
+                <option value="Sugars">Sugars</option>
+                <option value="Pastas">Pastas</option>
+                <option value="Homemade">Homemade</option>
             </select><br>
             <label for="qty">Quantity</label>
             <input type="number" name="qty" class="txtbx" value="{{vqty}}">
